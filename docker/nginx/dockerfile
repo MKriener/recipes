@@ -1,0 +1,9 @@
+FROM nginx:alpine
+
+WORKDIR /var/www
+
+CMD ["nginx"]
+
+RUN apk add sed attr dialog dialog-doc bash bash-doc bash-completion grep grep-doc
+
+EXPOSE 80 443

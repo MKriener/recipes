@@ -1,0 +1,6 @@
+.env
+docker/database/data
+docker/database/init.sql
+docker/php-fpm/xdebug.ini
+logs/*
+.idea

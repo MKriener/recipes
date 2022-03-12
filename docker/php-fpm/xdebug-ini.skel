@@ -1,0 +1,8 @@
+zend_extension = xdebug.so
+xdebug.remote_enable = on
+xdebug.client_host = host.docker.internal
+xdebug.client_port = 9003
+xdebug.mode = debug
+xdebug.idekey = PHPSTORM
+xdebug.start_with_request = trigger
+xdebug.max_nesting_limit = 500
