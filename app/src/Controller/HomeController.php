@@ -13,6 +13,6 @@ class HomeController extends AbstractController
     #[Route('/', 'app_home')]
     public function __invoke(): Response
     {
-        return $this->render('base.tml.twig');
+        return $this->render('home/home.html.twig');
     }
 }

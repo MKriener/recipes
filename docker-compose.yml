@@ -23,7 +23,7 @@ services:
     environment:
       - APP_ENV=${APP_ENV}
       - APP_SECRET=${APP_SECRET}
-      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@recipesdb:3306/${DATABASE_NAME}?serverVersion=mariadb-10.5.9
+      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:3306/${DATABASE_NAME}?serverVersion=mariadb-10.5.9
     volumes:
       - ./:/var/www
       - ./docker/php-fpm/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
@@ -39,7 +39,7 @@ services:
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d
       - ./logs:/var/log
     depends_on:
-      - app
+      - php
     ports:
       - 80:80
       - 443:443
