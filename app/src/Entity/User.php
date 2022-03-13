@@ -15,13 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use function array_unique;
 
 #[ORM\Entity(UserRepository::class)]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id;
-
     #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
     private ?string $email;
 
@@ -32,9 +27,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::STRING)]
     private ?string $password;
 
-    public function getId(): ?int
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => 0])]
+    private bool $isEnabled = false;
+
+    private ?string $plainPassword;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->roles[] = 'ROLE_REGISTERED';
+        parent::__construct();
     }
 
     public function getEmail(): ?string
@@ -45,6 +46,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->isEnabled;
+    }
+
+    public function enable(): self
+    {
+        $this->isEnabled = true;
+
+        return $this;
+    }
+
+    public function disable(): self
+    {
+        $this->isEnabled = false;
 
         return $this;
     }
@@ -93,6 +113,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
     }
 
     public function getSalt(): ?string
