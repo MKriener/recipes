@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="col border text-right">
+        <a href="{{ path('app_user_register') }}">create +</a>
+    </div>
+    <div class="card-body">
+        <div class="col-12">
+            <div class="row border">
+                <div class="col-1">Status</div>
+                <div class="col-3">Email</div>
+                <div class="col-3">CreatedAt</div>
+            </div>
+            {% for user in users %}
+                <div class="row border">
+                    <div class="col-lg-1">
+                        {% if user.enabled %}
+                            <a class="bi-check-circle-fill" href="{{ path('app_user_disable', {userId: user.id}) }}"></a>
+                        {% else %}
+                            <a class="bi-stop-circle-fill text-danger" href="{{ path('app_user_enable', {userId: user.id}) }}"></a>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ user.email }}
+                    </div>
+                    <div class="col-lg-3">
+                        {{ user.createdAt|date("d-m-Y") }}
+                    </div>
+                    <div class="col-lg-1 bi-">
+                        <a class="bi-pencil-fill" href="{{ path('app_user_edit', {userId: user.id}) }}"></a>
+                        <a class="bi-trash-fill" href="{{ path('app_user_delete', {userId: user.id}) }}"></a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
